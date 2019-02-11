@@ -3,7 +3,7 @@ import EmployeeCreate from './EmployeeCreate';
 import EmployeeEdit from './EmployeeEdit';
 import EmployeeList from './EmployeeList';
 import Profile from './Profile';
-import LoginForm from './LoginForm';
+//import LoginForm from './LoginForm';
 
 export default DrawerNavigator (
     {

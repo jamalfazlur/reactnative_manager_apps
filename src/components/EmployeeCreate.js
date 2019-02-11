@@ -1,8 +1,22 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { Header } from 'react-native-elements';
+import { connect } from 'react-redux';
+import { employeeCreate } from '../actions';
+import { Card, Button, CardSection } from './common';
+import EmployeeForm from './EmployeeForm';
 
 class EmployeeCreate extends Component {
+    
+    static navigationOptions = {
+        drawerLabel: 'Add New Employee'
+    };
+
+    onButtonPress = () => {
+        const { name, phone, shift } = this.props;
+        this.props.employeeCreate(name, phone, shift || 'Sunday');
+    }
+
     render() {
         return(
             <View>
@@ -21,10 +35,26 @@ class EmployeeCreate extends Component {
                     }}
                     containerStyle={{backgroundColor: 'salmon'}}
                 />
-                <Text>Ini Employee Create</Text>
+                {/* <Text>Ini Employee Create</Text> */}
+
+                <Card>
+                    <EmployeeForm />
+
+                    <CardSection>
+                        <Button onPress={this.onButtonPress}>
+                            Save
+                        </Button>
+                    </CardSection>
+                </Card>
             </View>
         );
     }
 }
 
-export default EmployeeCreate;
+const mapStateToProps = (state) => {
+    const { name, phone, shift } = state.employeeForm;
+
+    return { name, phone, shift };
+}
+
+export default connect(mapStateToProps, { employeeCreate })(EmployeeCreate);

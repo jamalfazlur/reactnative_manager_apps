@@ -3,6 +3,11 @@ import { View, Text } from 'react-native';
 import { Header } from 'react-native-elements';
 
 class EmployeeEdit extends Component {
+
+    static navigationOptions = {
+        drawerLabel: 'Update Data Employee'
+    };
+
     render() {
         return(
             <View>

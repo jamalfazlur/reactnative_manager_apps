@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, FlatList } from 'react-native';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 import { Header } from 'react-native-elements';
 import { getEmployeeList } from '../actions';
-
+import EmployeeListItem from './EmployeeListItem';
 
 class EmployeeList extends Component {
 
@@ -11,8 +12,12 @@ class EmployeeList extends Component {
         drawerLabel: 'List Of Employee'
     };
 
-    componenetDidMount() {
+    componentDidMount() {
         this.props.getEmployeeList();
+    }
+
+    renderRow = ({item}) => {
+        return <EmployeeListItem employee={item} navigation={this.props.navigation} />
     }
 
     render() {
@@ -28,10 +33,26 @@ class EmployeeList extends Component {
                     centerComponent={{text: 'List Employee', style: { color: '#FFF' }}}
                     containerStyle={{backgroundColor: 'salmon'}}
                 />
-                <Text>Ini Employee List</Text>
+                
+                <FlatList 
+                    data={this.props.employees}
+                    renderItem={this.renderRow}
+                />
             </View>
         );
     }
 }
 
-export default connect(null, { getEmployeeList })(EmployeeList);
+const mapStateToProps = (state) => {
+    console.log(state.employees);
+    
+    const employees = _.map(state.employees, (val, uid) => {
+        return { ...val, uid };
+    });
+
+    console.log(employees);
+
+    return { employees };
+};
+
+export default connect(mapStateToProps, { getEmployeeList })(EmployeeList);

@@ -22,14 +22,15 @@ export const employeeCreate = (name, phone, shift) => {
     };
 };
 
+
 export const getEmployeeList = () => {
     const { currentUser } = firebase.auth();
-
+    
     return (dispatch) => {
         firebase.database().ref(`/users/${currentUser.uid}/employees`)
-        .on('value', snapshot => {
-            console.log(snapshot.val());
-            dispatch({ type: EMPLOYEES_GETLIST_SUCCESS, payload: snapshot.val() });
-        });
+            .on('value', snapshot => {
+                console.log('dari actions: ' + snapshot.val());
+                dispatch({ type: EMPLOYEES_GETLIST_SUCCESS, payload: snapshot.val() });
+            });
     };
 };
